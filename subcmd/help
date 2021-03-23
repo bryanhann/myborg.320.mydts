@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+short4cmd () {
+    doc=${HELP}/${cmd}.short
+    [ -f ${doc} ] && cat ${doc} || echo 'short help not available'
+}
+
+long4cmd () {
+    doc=${HELP}/${cmd}.long
+    [ -f ${doc} ] && cat ${doc} || echo 'long help not available'
+}
+
+general () {
+    echo USAGE:
+    echo "        $PROG SUBCOMMAND"
+    echo
+    echo SUBCOMMANDS:
+    for cmd in $(/bin/ls ${SUBS}); do
+        printf "        $cmd -- $(short4cmd $cmd)\n"
+    done
+}
+
+
+special () {
+    cmd=$1
+    echo USAGE:
+    echo "        $PROG ${cmd}"
+    echo
+    echo $(long4cmd $cmd)
+}
+
+
+[ -z "$1" ] && general || special $1

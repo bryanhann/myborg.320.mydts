@@ -1,0 +1,20 @@
+export ROOT=$(dirname $0)
+export PROG=$(basename $0)
+export SUBS=${ROOT}/subcmd
+export HELP=${ROOT}/help
+
+case $1. in
+    .|-h.|--help.)
+        ${SUBS}/help
+        exit
+        ;;
+    help.)
+        shift
+        ${SUBS}/help $*
+        exit
+        ;;
+esac
+
+[ ! -f ${SUBS}/$1 ] &&  echo ${PROG}: unrecognized subcommand: "[$1]"
+[   -f ${SUBS}/$1 ] && source ${SUBS}/$*
+

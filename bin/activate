@@ -1,0 +1,65 @@
+demo_ts4d () {
+    for d in $(_mytag_ds); do
+        echo $d
+        for t in $(_mytag_ts4d $d); do
+            echo "    " $t
+        done
+    done
+}
+_mytag_ds () {
+    __inner () {
+        for root in /Volumes /mnt /media /mount $HOME; do
+            find $root -maxdepth 6 -name .mytags  2> /dev/null
+        done
+    }
+    for xx in $(__inner); do
+        echo $(dirname $xx)
+    done
+}
+
+_mytag_ds4t () {
+    for d in $(_mytag_ds); do
+        $(_mytag_has4d4t $d $1) && echo ${d}
+    done
+}
+
+_mytag_ds4t () {
+    for d in $(_mytag_ds); do
+        $(_mytag_has4d4t $d $1) && echo ${d}
+    done
+}
+
+_mytag_has4d4t() {
+    for t in $(_mytag_ts4d $1); do [ "$t" = "$2" ] && return 0;  done
+    return 1
+}
+_mytag_ts () {
+    for d in $(_mytag_ds); do
+        for t in $(_mytag_ts4d $d); do
+           echo $t
+        done
+    done
+
+}
+
+_mytag_ts4d () {
+    /bin/ls $1/.mytags
+}
+
+_mytag_ts4d () {
+    /bin/ls $1/.mytags
+}
+
+_mytag_ud4t() {
+    count=0
+
+    for d in  $(_mytag_ds4t $1); do
+        count=$(( $count + 1 ))
+    done
+
+    [ $count = 1 ] && echo $d && return  0
+    [ $count = 0 ] && echo "no hits." >&2 && return 1
+    [ . = .      ] && echo "duplicate [$count] hits." >&2  && return 2
+}
+
+
