@@ -33,6 +33,14 @@ _mytag_has4d4t() {
     for t in $(_mytag_ts4d $1); do [ "$t" = "$2" ] && return 0;  done
     return 1
 }
+
+
+_mytag_is4d() {
+    [ "${1}" = ""       ] && return 2
+    [ ! -d ${1}/.mytags ] && return 1
+    return 0
+}
+
 _mytag_ts () {
     for d in $(_mytag_ds); do
         for t in $(_mytag_ts4d $d); do
