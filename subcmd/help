@@ -25,7 +25,9 @@ general () {
     echo
     echo SUBCOMMANDS:
     for cmd in $(/bin/ls ${SUBS}); do
-        printf "        ${cmd}\t $(doc4cmd $cmd --oneline)\n"
+     printf "       "
+     printf '%-16s' "${cmd} "
+     printf "$(doc4cmd $cmd --oneline)\n"
 
     done
 }
