@@ -1,5 +1,5 @@
 
-#d# List all tags on host
+#d# List all tags
 #d#
 #d# List every tag on host by listing each tag in every
 #d# tagged directory. They may be repeated.
