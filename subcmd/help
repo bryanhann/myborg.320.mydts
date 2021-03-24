@@ -8,7 +8,7 @@
 #d#
 
 doc4cmd () {
-    cmd=${1}
+    cmd=${SUBS}/${1}
     while IFS= read -r line;
         do
             aa=$( echo "$line" | cut -c -3 )
@@ -26,6 +26,7 @@ general () {
     echo SUBCOMMANDS:
     for cmd in $(/bin/ls ${SUBS}); do
         printf "        ${cmd}\t $(doc4cmd $cmd --oneline)\n"
+
     done
 }
 
