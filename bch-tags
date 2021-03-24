@@ -16,5 +16,5 @@ case $1. in
 esac
 
 [ ! -f ${SUBS}/$1 ] &&  echo ${PROG}: unrecognized subcommand: "[$1]"
-[   -f ${SUBS}/$1 ] && source ${SUBS}/$*
+[   -f ${SUBS}/$1 ] &&  ${SUBS}/$*
 

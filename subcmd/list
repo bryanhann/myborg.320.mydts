@@ -1,2 +1,5 @@
+#d# List all tagged directories
+#d#
+#d# List all directories containing a subdirectory ./mytags
 source ${ROOT}/bin/activate
 _mytag_ds

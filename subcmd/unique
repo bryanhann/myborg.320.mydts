@@ -1,0 +1,8 @@
+#d# Find unique folder with given tag
+#d#
+#d# If found, print it to stdout and exit 0
+#d# If no hits, print message to stderr and exit 1
+#d# If duplicate hits, print message to stderr and exit 2
+
+source ${ROOT}/bin/activate
+_mytag_ud4t $*

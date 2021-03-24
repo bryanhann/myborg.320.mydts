@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 
-short4cmd () {
-    doc=${HELP}/${cmd}.short
-    [ -f ${doc} ] && cat ${doc} || echo 'short help not available'
-}
+#d# Print this help!
+#d#
+#d#     This is before      the blank
+#d#
+#d#      This is after  the blank
+#d#
 
-long4cmd () {
-    doc=${HELP}/${cmd}.long
-    [ -f ${doc} ] && cat ${doc} || echo 'long help not available'
+doc4cmd () {
+    cmd=${1}
+    while IFS= read -r line;
+        do
+            aa=$( echo "$line" | cut -c -3 )
+            bb=$( echo "$line" | cut -c 5- )
+            [ ! "${aa}" = '#d#' ] && continue
+            [ $2. = --oneline. ] && echo ${bb} && break
+            echo "        ${bb}"
+        done < ${cmd}
 }
 
 general () {
@@ -16,17 +25,21 @@ general () {
     echo
     echo SUBCOMMANDS:
     for cmd in $(/bin/ls ${SUBS}); do
-        printf "        $cmd -- $(short4cmd $cmd)\n"
+        printf "        ${cmd}\t $(doc4cmd $cmd --oneline)\n"
     done
 }
 
-
 special () {
     cmd=$1
+    [ ! -f ${SUBS}/${cmd} ] && {
+      echo "not a subcommand: [${cmd}]"
+      exit
+    }
     echo USAGE:
     echo "        $PROG ${cmd}"
     echo
-    echo $(long4cmd $cmd)
+    echo DOCUMENTATION:
+    doc4cmd ${cmd}
 }
 
 

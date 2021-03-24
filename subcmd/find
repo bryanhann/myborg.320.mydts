@@ -1,0 +1,4 @@
+#d# List all directories with given tag.
+
+source ${ROOT}/bin/activate
+_mytag_ds4t $*

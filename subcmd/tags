@@ -1,0 +1,8 @@
+
+#d# List all tags on host
+#d#
+#d# List every tag on host by listing each tag in every
+#d# tagged directory. They may be repeated.
+
+source ${ROOT}/bin/activate
+_mytag_ts
