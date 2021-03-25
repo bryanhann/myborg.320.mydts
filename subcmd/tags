@@ -1,8 +1,21 @@
-
-#d# List all tags
+#d# List tags
 #d#
-#d# List every tag on host by listing each tag in every
-#d# tagged directory. They may be repeated.
+#d# Options:
+#d#     -a       : list all tags
+#d#     -d <dir> : list tags in <dir>
 
 source ${ROOT}/bin/activate
-_mytag_ts
+
+case $1. in
+    -d.)
+        /bin/ls -1 "$2/.mytags"
+        exit
+        ;;
+    -a.)
+        _mytag_ts
+        ;;
+    *)
+        $PROG help $(basename $0)
+        ;;
+esac
+

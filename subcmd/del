@@ -1,0 +1,15 @@
+#d# Remove a tag from a directory
+#d#
+#d# Usage:
+#d#     PROG SUB <dir> <tag>
+
+NAME=$(basename $0)
+tagfile=${1}/.mytags/${2}
+
+help () { $PROG help $NAME; }
+
+[ "$1" == ""        ] && { help; exit; }
+[ "$1" == "-h"      ] && { help; exit; }
+[ "$1" == "--help"  ] && { help; exit; }
+[ ! -d "${1}"       ] && echo "not a dir: [${1}]" && exit 87
+[ -f ${tagfile}     ] && rm ${tagfile}

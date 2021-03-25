@@ -1,5 +1,0 @@
-dir=$1
-tagfile=${dir}/.mytags/$2
-[ ! -d ${dir} ] && echo "not a dir: [${dir}]" && exit 87
-[ -f ${tagfile} ] && rm ${tagfile}
-bch-tags ts4d ${dir}

@@ -1,6 +1,0 @@
-dir=$1
-tag=$2
-[ ! -d ${dir} ] && echo "not a dir: [${dir}]" && exit 87
-mkdir -p ${dir}/.mytags
-touch ${dir}/.mytags/$2
-bch-tags ts4d ${dir}

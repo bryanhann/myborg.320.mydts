@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-#d# Print this help!
-#d#
-#d#     This is before      the blank
-#d#
-#d#      This is after  the blank
+#d# Print this help
 #d#
 
 doc4cmd () {

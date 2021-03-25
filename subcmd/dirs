@@ -1,5 +1,27 @@
-#d# List all tagged directories
+#d# List tagged dirs
 #d#
-#d# List all directories containing a subdirectory ./mytags
+#d# List dirs containing a subdir ./mytags
+#d#
+#d# OPTIONS:
+#d#     -a          : list all tags
+#d#     -t <tag>    : list only dirs containing tag <tag>
+
 source ${ROOT}/bin/activate
-_mytag_ds
+
+NAME=$(basename $0)
+
+case $1. in
+    -a.)
+        _mytag_ds
+        ;;
+    -t.)
+        for dir in $(_mytag_ds); do
+            [ -f ${dir}/.mytags/$2 ] && echo ${dir}
+        done
+        ;;
+    *)
+        $PROG help $NAME
+        ;;
+esac
+
+
