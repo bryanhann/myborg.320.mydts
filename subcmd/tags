@@ -1,8 +1,17 @@
+#!/bin/sh
+
 #d# List tags
-#d#
-#d# Options:
-#d#     -a       : list all tags
-#d#     -d <dir> : list tags in <dir>
+
+usage () { cat << EOF
+USAGE:
+    $PROG $SUB -a         : list all tags
+    $PROG $SUB -d <DIR>   : list tags from dir <DIR>
+EOF
+}
+SUB=$(basename $0)
+[ "$1" = "-h" ] && usage && exit
+[ "$1" = "--help" ] && usage && exit
+#[ "$1" = "" ] && usage && exit
 
 source ${ROOT}/bin/activate
 

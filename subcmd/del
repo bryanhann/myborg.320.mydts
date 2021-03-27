@@ -1,7 +1,16 @@
+#!/bin/sh
+
 #d# Remove a tag from a directory
-#d#
-#d# Usage:
-#d#     PROG SUB <dir> <tag>
+
+usage () { cat << EOF
+USAGE:
+    $PROG $SUB <dir> <tag>          : remove tag from dir
+EOF
+}
+SUB=$(basename $0)
+[ "$1" = "-h" ] && usage && exit
+[ "$1" = "--help" ] && usage && exit
+#[ "$1" = "" ] && usage && exit
 
 NAME=$(basename $0)
 tagfile=${1}/.mytags/${2}

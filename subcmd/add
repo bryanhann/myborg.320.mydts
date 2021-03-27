@@ -1,10 +1,23 @@
+#!/bin/sh
+
 #d# Add a tag to a directory
-#d#
-#d# Usage:  
-#d#     PROG SUB <dir> <tag>
-#d#
+
+usage () { cat << EOF
+USAGE:
+    $PROG $SUB <dir> <tag>      : Add tag to directory
+EOF
+}
+
+SUB=$(basename $0)
+[ "$1" = "-h" ] && usage && exit
+[ "$1" = "--help" ] && usage && exit
+
+
+
 dir=$1
 tag=$2
+[ "$1" = "-h" ] && usage && exit
+[ "$1" = "--help" ] && usage && exit
 [ "$1" = "" ] && $PROG help $(basename $0)
 [ "$1" = "" ] && echo MISSING PARAMATER. && exit
 [ ! -d ${dir} ] && echo "not a dir: [${dir}]" && exit 87

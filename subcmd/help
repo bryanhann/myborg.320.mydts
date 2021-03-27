@@ -1,7 +1,15 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-#d# Print this help
-#d#
+#d# Supply help on subcommands
+
+usage () { cat << EOF
+USAGE:
+    $PROG $SUB      : supply help on subcommands
+EOF
+}
+SUB=$(basename $0)
+[ "$1" = "-h" ] && usage && exit
+[ "$1" = "--help" ] && usage && exit
 
 doc4cmd () {
     cmd=${SUBS}/${1}
@@ -18,15 +26,14 @@ doc4cmd () {
 general () {
     echo USAGE:
     echo "        $PROG SUBCOMMAND"
+    echo "        $PROG SUBCOMMAND -h"
     echo
     echo SUBCOMMANDS:
     for cmd in $(/bin/ls ${SUBS}); do
         printf "       "
-        printf '%-16s' "${cmd} "
+        printf '%-10s' "${cmd} "
         printf "$(doc4cmd $cmd --oneline)\n"
     done
-    echo
-    echo "try 'help SUBCOMMMAND' for help on a particular subcommand."
 }
 
 special () {
@@ -35,11 +42,8 @@ special () {
       echo "not a subcommand: [${cmd}]"
       exit
     }
-    echo USAGE:
-    echo "        $PROG ${cmd}"
-    echo
-    echo DOCUMENTATION:
-    doc4cmd ${cmd}
+    $PROG ${cmd} -h
+    return
 }
 
 

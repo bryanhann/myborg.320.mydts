@@ -1,10 +1,17 @@
+#!/bin/sh
+
 #d# List tagged dirs
-#d#
-#d# List dirs containing a subdir ./mytags
-#d#
-#d# OPTIONS:
-#d#     -a          : list all tags
-#d#     -t <tag>    : list only dirs containing tag <tag>
+
+usage () { cat << EOF
+USAGE:
+        $PROG $SUB -a           : list all tagged dirs
+        $PROG $SUB -t <TAG>     : list all dirs with tag <TAG>
+EOF
+}
+SUB=$(basename $0)
+[ "$1" = "-h" ] && usage && exit
+[ "$1" = "--help" ] && usage && exit
+#[ "$1" = "" ] && usage && exit
 
 source ${ROOT}/bin/activate
 
