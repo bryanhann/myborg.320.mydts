@@ -7,8 +7,11 @@ export INDEX=${ROOT}/.mydts.index
 source ${ROOT}/bin/activate
 
 freshen () {
-    [ -f ${INDEX} ] && rm ${INDEX}
-    _mytag_ds > ${INDEX}
+    t=/tmp/$RANDOM.$RANDOM
+    _mytag_ds > ${t}
+    mv ${t} ${INDEX}
+    #echo $t
+    #[ -f ${INDEX} ] && rm ${INDEX}
 }
 
 
