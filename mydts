@@ -2,6 +2,15 @@ export ROOT=$(dirname $0)
 export PROG=$(basename $0)
 export SUBS=${ROOT}/subcmd
 export HELP=${ROOT}/help
+export INDEX=${ROOT}/.mydts.index
+
+source ${ROOT}/bin/activate
+
+freshen () {
+    [ -f ${INDEX} ] && rm ${INDEX}
+    _mytag_ds > ${INDEX}
+}
+
 
 case $1. in
     .|-h.|--help.)
@@ -14,6 +23,12 @@ case $1. in
         exit
         ;;
 esac
+
+[ ! -f ${INDEX} ] && freshen
+
+[ "$1" = "-f"   ] && shift && freshen
+[ "$1" = ""     ] && exit
+
 
 [ ! -f ${SUBS}/$1 ] &&  echo ${PROG}: unrecognized subcommand: "[$1]"
 [   -f ${SUBS}/$1 ] &&  ${SUBS}/$* && exit $?
