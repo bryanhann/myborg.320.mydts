@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#d# List tagged dirs
+
+[ "$1" = "-h" ] && {
+cat << EOF
+USAGE:
+        $PROG $(basename $0) <tag>    : List dirs with tag <tag>
+EOF
+exit
+}
+
+for dir in $(cat $INDEX); do
+    [ -f ${dir}/.mytags/$1 ] && echo $dir
+done

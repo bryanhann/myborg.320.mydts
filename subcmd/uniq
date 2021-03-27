@@ -1,0 +1,34 @@
+#!/bin/sh
+
+#d# Find unique dir with given tag
+
+[ "$1" = "-h" ] && {
+cat << EOF
+USAGE:
+        $PROG $(basename $0) [-r] <tag>
+
+        Echo unique directory with tag <tag>
+
+OPTIONS:
+        -r      If no result, retry with a freshened cache.
+EOF
+exit
+}
+
+uniq  () { $PROG    find $1 | borg-uniq -t 2> /dev/null ; }
+uniqf () { $PROG -f find $1 | borg-uniq -t 2> /dev/null ; }
+
+
+case $1. in
+    .|-h.|--help.)
+        usage
+        ;;
+    -r.)
+        uniq $2 || uniqf $2
+        exit $?
+        ;;
+    *)
+        uniq $1
+        exit $?
+        ;;
+esac
