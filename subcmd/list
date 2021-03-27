@@ -1,0 +1,86 @@
+#!/bin/sh
+
+#d# List tagged dirs
+
+usage () {
+cat << EOF
+USAGE:
+        $PROG $(basename $0) tags         : List all tags
+        $PROG $(basename $0) tags+        : List all tags with their directories
+        $PROG $(basename $0) dirs         : List all tagged directories
+        $PROG $(basename $0) dirs+        : List all tagged directories with their tags
+        $PROG $(basename $0) 4dir   <DIR> : List all tags in directory <DIR>
+        $PROG $(basename $0) 4tag   <TAG> : List all tagged directories with tag <TAG>
+        $PROG $(basename $0) uniq   <TAG> : Like 4tag, but require unique result
+        $PROG $(basename $0) uniq_f <TAG> : Like uniq, but try again with refresh on failure.
+EOF
+exit
+}
+
+_uniq4tag   () { 
+    _dirs4tag $1 | borg-uniq -t 2> /dev/null
+}
+
+_dirs () {
+    cat $INDEX | sort
+}
+
+_tags () {
+    for dir in $(_dirs); do 
+      _tags4dir $dir; 
+    done;
+}
+
+_dirs4tag () {
+    for dir in $(cat $INDEX); do
+        [ -f ${dir}/.mytags/$1 ] && echo ${dir}
+    done
+}
+
+_tags4dir () {
+    [ -d $1/.mytags ] && /bin/ls -1 $1/.mytags
+}
+
+
+
+_dirs_with_tags () {
+    for dir in $(_dirs); do
+        echo $dir
+        for tag in $(_tags4dir $dir); do
+            echo "        $tag"
+        done
+    done
+}
+
+_tags_with_dirs () {
+    for tag in $(_tags | sort | uniq); do
+        echo $tag
+        for dir in $(_dirs4tag $tag); do
+            echo "        $dir"
+      done
+    done
+}
+
+
+case $1. in
+    .|-h.|--help.)
+        usage ;;
+    dirs.) 
+        _dirs | sort ;;
+    tags.)
+        _tags | sort | uniq ;;
+    tags+.)
+        _tags_with_dirs ;;
+    dirs+.)
+        _dirs_with_tags ;;
+    4dir.)
+        _tags4dir $2 ;;
+    4tag.)
+        _dirs4tag $2 ;;
+    uniq.)
+        _uniq4tag $2 ;;
+    uniq_f.)
+        _uniq4tag $2 || { $PROG -f; _uniq4tag $2; } ;;
+    *)
+        echo "[$PROG $(basename $0)]: Bad subcommand: [$1]" ;;
+esac
