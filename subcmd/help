@@ -23,17 +23,31 @@ doc4cmd () {
         done < ${cmd}
 }
 
-general () {
-    echo USAGE:
-    echo "        $PROG SUBCOMMAND"
-    echo "        $PROG SUBCOMMAND -h"
-    echo
-    echo SUBCOMMANDS:
+general () { 
+cat << GENERAL
+USAGE:
+        $PROG [-f] SUBCOMMAND [<options>] [<args>]
+
+OPTIONS:
+        There is one global option [-f] which forces a refreshening
+        of the dir cache before executing the subcommand.
+
+        Traversing the filesystem to find tagged directories is costly,
+        so it is traversed once only and the results are cached for later
+        use.  When searching for tags in realtime on ephemeral media the
+        cache may be too stale for purposes at hand. In such cases the
+        client should use the [-f] option.
+
+SUBCOMMANDS:
+GENERAL
+
     for cmd in $(/bin/ls ${SUBS}); do
         printf "       "
         printf '%-10s' "${cmd} "
         printf "$(doc4cmd $cmd --oneline)\n"
     done
+echo
+echo "Try [$PROG SUBCOMMAND -h] for help on a particular subcommand."
 }
 
 special () {
