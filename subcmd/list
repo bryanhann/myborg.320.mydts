@@ -5,14 +5,17 @@
 usage () {
 cat << EOF
 USAGE:
-        $PROG $(basename $0) tags         : List all tags
-        $PROG $(basename $0) tags+        : List all tags with their directories
-        $PROG $(basename $0) dirs         : List all tagged directories
-        $PROG $(basename $0) dirs+        : List all tagged directories with their tags
-        $PROG $(basename $0) 4dir   <DIR> : List all tags in directory <DIR>
-        $PROG $(basename $0) 4tag   <TAG> : List all tagged directories with tag <TAG>
-        $PROG $(basename $0) uniq   <TAG> : Like 4tag, but require unique result
-        $PROG $(basename $0) uniq_f <TAG> : Like uniq, but try again with refresh on failure.
+        $PROG $(basename $0) tags            : List all tags
+        $PROG $(basename $0) tags+           : List all tags with their directories
+        $PROG $(basename $0) dirs            : List all tagged directories
+        $PROG $(basename $0) dirs+           : List all tagged directories with their tags
+        $PROG $(basename $0) 4dir <DIR>      : List all tags in directory <DIR>
+        $PROG $(basename $0) 4tag <TAG>      : List all tagged directories with tag <TAG>
+
+        $PROG $(basename $0) uniq [-r] <TAG>
+
+            Like 4tag, but require unique result. With -r, if the first try fails,
+            try again with a refreshed cache.
 EOF
 exit
 }
@@ -61,6 +64,10 @@ _tags_with_dirs () {
     done
 }
 
+_uniq4tag_f () {
+    _uniq4tag $1 || { $PROG -f; _uniq4tag $1; } 
+#    return $?
+}
 
 case $1. in
     .|-h.|--help.)
@@ -78,9 +85,9 @@ case $1. in
     4tag.)
         _dirs4tag $2 ;;
     uniq.)
-        _uniq4tag $2 ;;
-    uniq_f.)
-        _uniq4tag $2 || { $PROG -f; _uniq4tag $2; } ;;
+        [ "$2" = "-r" ] && { _uniq4tag_f $3 ; exit $?; }
+       _uniq4tag $2
+        ;;
     *)
         echo "[$PROG $(basename $0)]: Bad subcommand: [$1]" ;;
 esac
