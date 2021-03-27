@@ -1,21 +1,20 @@
 #!/bin/sh
 
-#d# List tagged dirs
+#d# Various list utilities.
 
 usage () {
 cat << EOF
 USAGE:
-        $PROG $(basename $0) tags            : List all tags
-        $PROG $(basename $0) tags+           : List all tags with their directories
-        $PROG $(basename $0) dirs            : List all tagged directories
-        $PROG $(basename $0) dirs+           : List all tagged directories with their tags
-        $PROG $(basename $0) 4dir <DIR>      : List all tags in directory <DIR>
-        $PROG $(basename $0) 4tag <TAG>      : List all tagged directories with tag <TAG>
+        $PROG $(basename $0) tags             -- List all tags
+        $PROG $(basename $0) tags+            -- List all tags with their directories
+        $PROG $(basename $0) dirs             -- List all tagged directories
+        $PROG $(basename $0) dirs+            -- List all tagged directories with their tags
+        $PROG $(basename $0) 4dir <DIR>       -- List all tags in directory <DIR>
+        $PROG $(basename $0) 4tag <TAG>       -- List all tagged directories with tag <TAG>
+        $PROG $(basename $0) uniq [-r] <TAG>  -- Like 4tag, but require unique result.
 
-        $PROG $(basename $0) uniq [-r] <TAG>
-
-            Like 4tag, but require unique result. With -r, if the first try fails,
-            try again with a refreshed cache.
+OPTIONS:
+        -r      -- On failure, try again with a refreshed cache.
 EOF
 exit
 }
