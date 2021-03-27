@@ -1,0 +1,33 @@
+#!/bin/sh
+
+#d# Find unique dir with given tag
+
+usage ()  {
+cat << EOF
+USAGE:
+        $PROG $(basename $0)  [-r] <TAG>
+
+        Search for a unique directory with tag <TAG>. 
+        If found, echo it.
+
+OPTIONS:
+        -r  :   If no result, retry with a freshened cache.
+
+EXIT CODE:
+        0   : unique directory found containing tag.
+        1   : no directory found containing tag.
+        2   : multiple directories found containing tag.
+
+NOTES:
+        This is a front-end to [$PROG list unique].
+EOF
+}
+
+case $1. in
+    .|-h.|--help.)
+        usage
+        ;;
+    *)
+        $PROG list uniq $*
+        ;;
+esac
