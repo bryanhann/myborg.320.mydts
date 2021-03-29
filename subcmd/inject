@@ -1,0 +1,40 @@
+#!/bin/sh
+
+#d# Inject a unique tag.
+usage () {
+cat << EOF
+USAGE:
+    $PROG $SUB <TAG> <DIR>
+    
+    Add tag to dir if it would make it unique.
+EOF
+}
+
+SUB=$(basename $0)
+META=$1
+TARGET=$2
+
+case $1. in
+    .|-h.|--help.)
+        usage
+        exit
+        ;;
+esac
+
+mydts isuniq $META
+err=$?
+echo err: $err
+case $err. in
+     0.)
+         echo $META is unique at $(mydts uniq $META)
+         ;;
+     1.)
+         echo fixing...
+         mkdir -p $TARGET
+         mydts add $TARGET $META
+         ;;
+     *)
+         echo unfixible
+         ;;
+esac
+

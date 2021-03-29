@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#d# Test uniqueness of tag
+
+usage () {
+cat << EOF
+USAGE:
+    $PROG $SUB <TAG>
+
+    Test whether <TAG> is unique
+
+EXIT CODES:
+    0       uniq
+    1       not found
+    2       duplicates found
+    other   unexpected error
+EOF
+}
+SUB=$(basename $0)
+
+
+case $1. in
+    .|-h.|--help.)
+        usage
+        exit
+        ;;
+esac
+
+mydts uniq -r $1 > /dev/null
