@@ -17,9 +17,13 @@ _mytag_ds () {
     done
 }
 
+random () {
+    python -c "import random; print(random.random())"
+}
+
 freshen () {
     echo "[$PROG]: refreshing cache ..." >&2
-    t=/tmp/$RANDOM.$RANDOM
+    t=/tmp/$(random)
     _mytag_ds > ${t}
     mv ${t} ${INDEX}
 }
