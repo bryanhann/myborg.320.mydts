@@ -6,7 +6,16 @@ export SUBS=${ROOT}/subcmd
 export HELP=${ROOT}/help
 export INDEX=${ROOT}/.mydts.index
 
-source ${ROOT}/bin/activate
+_mytag_ds () {
+    __inner () {
+        for root in /Volumes /mnt /media /mount $HOME; do
+            find $root -maxdepth 6 -name .mytags  2> /dev/null
+        done
+    }
+    for xx in $(__inner); do
+        echo $(dirname $xx)
+    done
+}
 
 freshen () {
     echo "[$PROG]: refreshing cache ..." >&2
